@@ -20,7 +20,7 @@ class User(db.Model,UserMixin):
 
     def __init__(self,email,username,password):
         self.email = email
-        self.username - username
+        self.username = username
         self.password_hash = generate_password_hash(password)
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)    
@@ -30,7 +30,7 @@ class BlogPost(db.Model):
     user = db.relationship(User)
 
     id = db.Column(db.Integer,primary_key = True)
-    user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable = False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
 
     date = db.Column(db.DateTime,nullable = False,default = datetime.utcnow)
     title = db.Column(db.String(140),nullable=False)
