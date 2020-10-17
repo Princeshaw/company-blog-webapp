@@ -39,7 +39,7 @@ def login():
 #logout
 @users.route('/logout')
 def logout():
-    login_user()
+    logout_user()
     return redirect(url_for('core.index'))
 
 
