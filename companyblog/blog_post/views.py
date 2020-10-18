@@ -34,16 +34,16 @@ def blog_post(blog_post_id):
 @login_required
 def update(blog_post_id):
     blog_post=BlogPost.query.get_or_404(blog_post_id)
-    if blog_post.autor != current_user:
+    if blog_post.author != current_user:
         abort(403)
     form = BlogPostForm()
     if form.validate_on_submit():
-        blog_Post.title=form.title.data
+        blog_post.title=form.title.data
         blog_post.text = form.text.data
         db.session.add(blog_post)
         db.session.commit()
         flash('Blog Post Updated')
-        return redirect(url_for('blog_post.blog_post',blog_post_id=blog_post.id))
+        return redirect(url_for('blog_posts.blog_post',blog_post_id=blog_post.id))
     elif request.method == 'GET':
         form.title.data = blog_post.title
         form.text.data = blog_post.text
@@ -57,7 +57,7 @@ def update(blog_post_id):
 @login_required
 def delete_post(blog_post_id):
     blog_post=BlogPost.query.get_or_404(blog_post_id)
-    if blog_post.autor != current_user:
+    if blog_post.author != current_user:
         abort(403)
     db.session.delete(blog_post)
     db.session.commit()
