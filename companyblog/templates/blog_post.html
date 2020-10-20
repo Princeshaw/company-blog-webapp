@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
+<meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+<meta property="og:type"          content="Blog" />
+<meta property="og:title"         content="{{post.title}}" />
+<meta property="og:description"   content={{post.title}} />
     <div class="jumbotron">
         <h1>{{post.title}}</h1>
-        <h2>Written by: {{post.author.username}}</h2>
-        <h3>Published: {{post.date.strftime('%B %d,%Y')}}</h3>
+        <h4>Written by: <a href="{{url_for('users.user_posts',username=post.author.username)}}">{{post.author.username}}</a></h4>
+        <h4>Published: {{post.date.strftime('%B %d,%Y')}}</h4>
         <p>{{post.text}}</p>
         {% if post.author==current_user %}
         <div>
             <a href="{{url_for('blog_posts.update',blog_post_id=post.id)}}">Update</a>
-            <button type="button" class="btn btn-danger" data-toggle="model" data-target="#del_model">Delete</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button>
         </div>
         
         {% endif %}
+        <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
     </div>
-    <div class="modal" tabindex="-1" role="dialog" id="del_model">
+    <div class="modal" tabindex="-1" role="dialog" id="del_modal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
